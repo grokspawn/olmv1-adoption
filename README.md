@@ -27,7 +27,7 @@ OLMv1 has had feature-driven GA levels.  Compare your needed feature against the
 | ClusterExtension API                  | 4.18     | G            |
 | ClusterCatalog API                    | 4.18     | G            |
 | ClusterExtension Webhooks             | 4.21     | G            |
-| ClusterExtension Single/Own-Namespace | 4.22     | G            |
+| ClusterExtension Single/Own-Namespace | 4.21     | T            |
 
 'G' indicates this feature defaults to enabled and is considered Generally Available.
 'T' indicates that this feature defaults to disabled and will be enabled in Tech Preview No Upgrades configuration.
@@ -95,11 +95,13 @@ spec:
 
 ### Does my operator need to support AllNamespaces install mode?
 
-**Phase 2 (OCP 4.21)**: Conditionally no, SingleNamespace and OwnNamespace are supported via the `config.inline.watchNamespace` field in a limited way.
+**Phase 2 (OCP 4.21)**: SingleNamespace and OwnNamespace are supported in **Tech Preview (TPNU)** via the `config.inline.watchNamespace` field in a limited way.
 
 **Future**: AllNamespaces is the recommended design pattern, but not mandatory yet.
 
 ## Background
+
+**Note**: Single-/Own-namespace  installmode support is currently **Tech Preview (TPNU)** and will remain so for the foreseeable future.  Design discussions are ongoing about the best approach for hangling operators that rely on non-AllNamespaces installmode.
 
 In OLMv0, use-cases for the Single-/Own-namespace installmodes were to facilitate multiple operator installations (potentially with different versions).
 OLMv1 is not going to support these use-cases because APIs/CRDs are cluster-scoped and OLMv1 enforces a single-owner rule on resources. See [OLMv1 Design Decisions](https://operator-framework.github.io/operator-controller/project/olmv1_design_decisions/) and [OLMv1 Single Owner Objects](https://operator-framework.github.io/operator-controller/concepts/single-owner-objects/).
@@ -116,8 +118,8 @@ then your operator using SingleNamespace or OwnNamespace InstallMode may be inst
 | Install Mode | OLMv0 | OLMv1 Phase 2 |
 |--------------|-------|---------------|
 | AllNamespaces | Supported | Supported |
-| OwnNamespace | Supported | Supported (with config) |
-| SingleNamespace | Supported | Supported (with config) |
+| OwnNamespace | Supported | TechPreview (with config) |
+| SingleNamespace | Supported | TechPreview (with config) |
 | MultiNamespace | Supported | Not Supported |
 
 ### How do I configure SingleNamespace/OwnNamespace mode?
@@ -509,10 +511,4 @@ oc label namespace your-namespace pod-security.kubernetes.io/enforce=privileged
 
 ## Contributing to This FAQ
 
-This FAQ is based on discussions from the #olm-v1-adoption-for-your-operator Slack channel. If you have updates or corrections, please contribute them back to the community.
-
-**Last Updated**: 2026-01-27
-
-### Recent Discussion Updates
-
-- **2026-01-27**: Added clarification on bundle/catalog compatibility, ServiceAccount requirements, dependency handling (operators will fail to install), and OperatorCondition replacement plans (ClusterExtensionRevision API) from [Slack thread](https://redhat-internal.slack.com/archives/C3VS0LV41/p1769500684687189)
+This FAQ is based on discussions from the #olm-v1-adoption-for-your-operator Slack channel. If you have updates or corrections, please contribute them back to the community by pushing a PR to this document.
