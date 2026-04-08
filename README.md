@@ -95,18 +95,18 @@ spec:
 
 ### Does my operator need to support AllNamespaces install mode?
 
-**Phase 2 (OCP 4.21)**: SingleNamespace and OwnNamespace are supported in **Tech Preview (TPNU)** via the `config.inline.watchNamespace` field in a limited way.
+OLMv1 can only install operators which support AllNamespaces InstallMode.
 
-**Future**: AllNamespaces is the recommended design pattern, but not mandatory yet.
+**Phase 2 (OCP 4.21)**: SingleNamespace and OwnNamespace are supported in **Tech Preview (TPNU)** via the `config.inline.watchNamespace` field in a limited way.
 
 ## Background
 
-**Note**: Single-/Own-namespace  installmode support is currently **Tech Preview (TPNU)** and will remain so for the foreseeable future.  Design discussions are ongoing about the best approach for hangling operators that rely on non-AllNamespaces installmode.
+**Note**: Single-/Own-namespace  installmode support is currently **Tech Preview (TPNU)** and will remain so for the foreseeable future.  Design discussions are ongoing about the best approach for handling operators that rely on non-AllNamespaces installmode.
 
 In OLMv0, use-cases for the Single-/Own-namespace installmodes were to facilitate multiple operator installations (potentially with different versions).
 OLMv1 is not going to support these use-cases because APIs/CRDs are cluster-scoped and OLMv1 enforces a single-owner rule on resources. See [OLMv1 Design Decisions](https://operator-framework.github.io/operator-controller/project/olmv1_design_decisions/) and [OLMv1 Single Owner Objects](https://operator-framework.github.io/operator-controller/concepts/single-owner-objects/).
 
-OLMv1 has _limited support_ for Single-/Own-namespace installmodes using ClusterExtension configuration. If your ClusterExtension
+OLMv1 has _limited support_ in _Tech Preview_ for Single-/Own-namespace installmodes using ClusterExtension configuration. If your ClusterExtension
 - accepts being installed once on the cluster, 
 - doesn't expect that API visibility is restricted to `.spec.namespace` or `.spec.config.inline.watchNamespace` namespaces, 
 - don't rely on being able to watch the designated namespace for CRs, and 
